@@ -267,9 +267,16 @@ function renderProducts() {
  * Render single product card
  */
 function renderProduct(product) {
+  // Create a data URI for placeholder image (SVG) - URL encoded
+  const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23f9fafb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='%236b7280'%3ENo Image%3C/text%3E%3C/svg%3E";
+  
+  // Generate unique ID for this image to prevent infinite loops
+  const imageId = `product-img-${product.id}-${Date.now()}`;
+  
+  // Use a simpler approach - directly use placeholder if no URL, or use proper error handling
   const image = product.image_url 
-    ? `<img src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.name)}" class="product-image" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">`
-    : `<div class="product-image" style="background: var(--bg-light); display: flex; align-items: center; justify-content: center; color: var(--text-light);">No Image</div>`;
+    ? `<img id="${imageId}" src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.name)}" class="product-image" loading="lazy" decoding="async" onerror="if(!this.dataset.fallbackSet){this.dataset.fallbackSet='true';this.onerror=null;this.src='${placeholderImage.replace(/'/g, "\\'")}';}">`
+    : `<img src="${placeholderImage}" alt="No image available" class="product-image">`;
 
   const tags = product.tags && product.tags.length > 0
     ? `<div class="product-tags">
@@ -679,10 +686,35 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+/**
+ * Handle image loading errors - prevents infinite loops
+ */
+function handleImageError(img, placeholder) {
+  // Prevent infinite loop by checking if already set to placeholder
+  if (img.dataset.fallbackSet === 'true') {
+    return; // Already tried fallback, stop trying
+  }
+  
+  // Mark as fallback set
+  img.dataset.fallbackSet = 'true';
+  
+  // Remove error handler to prevent infinite loop
+  img.onerror = null;
+  
+  // Set placeholder image
+  try {
+    img.src = placeholder;
+  } catch (e) {
+    // If setting src fails, hide the image
+    img.style.display = 'none';
+  }
+}
+
 // Make functions globally available for onclick handlers
 window.addToCart = addToCart;
 window.updateCartQuantity = updateCartQuantity;
 window.toggleCart = toggleCart;
 window.handleCheckout = handleCheckout;
 window.submitCheckout = submitCheckout;
+window.handleImageError = handleImageError;
 
