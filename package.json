@@ -1,0 +1,31 @@
+{
+  "name": "suchify-theme-template",
+  "version": "1.0.0",
+  "description": "Complete boilerplate platform for creating Suchify store themes. Includes theme template, custom API integration, smart logo handling, and comprehensive documentation.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx http-server . -p 8085 -o --cors",
+    "test": "npx http-server . -p 8085 -o test/index.html --cors",
+    "build": "node scripts/build.js",
+    "validate": "node scripts/validate.js",
+    "package": "npm run validate && npm run build && node scripts/package.js"
+  },
+  "keywords": [
+    "suchify",
+    "theme",
+    "template",
+    "boilerplate",
+    "ecommerce"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "archiver": "^6.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
+

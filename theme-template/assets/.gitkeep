@@ -1,0 +1,9 @@
+# Assets Directory
+
+Place your theme assets here:
+- images/ - Product images, icons, etc.
+- fonts/ - Custom font files
+- other/ - Any other static assets
+
+All paths in your theme should be relative to the theme-template directory.
+

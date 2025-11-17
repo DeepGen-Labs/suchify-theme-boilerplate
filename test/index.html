@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Testing - Suchify Starter Theme</title>
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="../theme-template/assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="../theme-template/assets/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../theme-template/assets/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../theme-template/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../theme-template/assets/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../theme-template/assets/android-chrome-512x512.png">
+  
+  <link rel="stylesheet" href="../theme-template/styles/main.css">
+</head>
+<body>
+  <div id="theme-container">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading store...</p>
+    </div>
+  </div>
+  
+  <script>
+    /**
+     * Mock API Client for Local Testing
+     * 
+     * This simulates the Suchify Store API for local development.
+     * Replace this with the actual API client when testing with real APIs.
+     */
+    
+    // Mock store data
+    const mockStore = {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Test Restaurant",
+      slug: "test-restaurant",
+      description: "A delicious test restaurant with amazing food and great service. Perfect for testing your Suchify theme!",
+      phone: "+1 (555) 123-4567",
+      email: "contact@testrestaurant.com",
+      address: "123 Test Street, Test City, TC 12345",
+      logo_url: "https://via.placeholder.com/150/3b82f6/ffffff?text=Logo",
+      banner_url: "https://via.placeholder.com/1200x400/3b82f6/ffffff?text=Banner",
+      theme_color: "#3b82f6",
+      social_links: [
+        {
+          platform: "Facebook",
+          handle: "testrestaurant",
+          url: "https://facebook.com/testrestaurant",
+          enabled: true
+        },
+        {
+          platform: "Instagram",
+          handle: "@testrestaurant",
+          url: "https://instagram.com/testrestaurant",
+          enabled: true
+        },
+        {
+          platform: "Twitter",
+          handle: "@testrestaurant",
+          url: "https://twitter.com/testrestaurant",
+          enabled: false
+        }
+      ],
+      configuration: {
+        currency: "USD",
+        tax_rate: 0.08,
+        shipping_enabled: true,
+        pickup_enabled: true,
+        delivery_enabled: true
+      }
+    };
+
+    // Mock products
+    const mockProducts = [
+      {
+        id: "1",
+        name: "Margherita Pizza",
+        description: "Classic pizza with fresh tomato sauce, mozzarella, and basil",
+        price: 12.99,
+        category: "Pizza",
+        image_url: "https://via.placeholder.com/300/ef4444/ffffff?text=Margherita",
+        stock_quantity: 50,
+        is_available: true,
+        sku: "PIZZA-001",
+        tags: ["vegetarian", "popular", "classic"]
+      },
+      {
+        id: "2",
+        name: "Pepperoni Pizza",
+        description: "Traditional pizza with pepperoni and mozzarella cheese",
+        price: 14.99,
+        category: "Pizza",
+        image_url: "https://via.placeholder.com/300/dc2626/ffffff?text=Pepperoni",
+        stock_quantity: 30,
+        is_available: true,
+        sku: "PIZZA-002",
+        tags: ["popular", "meat"]
+      },
+      {
+        id: "3",
+        name: "Caesar Salad",
+        description: "Fresh romaine lettuce with Caesar dressing, croutons, and parmesan",
+        price: 8.99,
+        category: "Salads",
+        image_url: "https://via.placeholder.com/300/10b981/ffffff?text=Caesar+Salad",
+        stock_quantity: 25,
+        is_available: true,
+        sku: "SALAD-001",
+        tags: ["vegetarian", "healthy"]
+      },
+      {
+        id: "4",
+        name: "Grilled Chicken",
+        description: "Tender grilled chicken breast with herbs and spices",
+        price: 16.99,
+        category: "Main Course",
+        image_url: "https://via.placeholder.com/300/f59e0b/ffffff?text=Grilled+Chicken",
+        stock_quantity: 20,
+        is_available: true,
+        sku: "MAIN-001",
+        tags: ["protein", "gluten-free"]
+      },
+      {
+        id: "5",
+        name: "Chocolate Cake",
+        description: "Rich chocolate cake with chocolate frosting",
+        price: 6.99,
+        category: "Desserts",
+        image_url: "https://via.placeholder.com/300/7c3aed/ffffff?text=Chocolate+Cake",
+        stock_quantity: 15,
+        is_available: true,
+        sku: "DESSERT-001",
+        tags: ["sweet", "popular"]
+      },
+      {
+        id: "6",
+        name: "Out of Stock Item",
+        description: "This item is out of stock for testing purposes",
+        price: 9.99,
+        category: "Test",
+        image_url: "https://via.placeholder.com/300/6b7280/ffffff?text=Out+of+Stock",
+        stock_quantity: 0,
+        is_available: false,
+        sku: "TEST-001",
+        tags: ["test"]
+      }
+    ];
+
+    // Mock categories
+    const mockCategories = [
+      { name: "Pizza", product_count: 2 },
+      { name: "Salads", product_count: 1 },
+      { name: "Main Course", product_count: 1 },
+      { name: "Desserts", product_count: 1 },
+      { name: "Test", product_count: 1 }
+    ];
+
+    // Mock promotions
+    const mockPromotions = [
+      {
+        id: "1",
+        name: "20% Off All Pizzas",
+        description: "Get 20% off on all pizza items",
+        discount_type: "percentage",
+        discount_value: 20,
+        start_date: "2024-01-01T00:00:00Z",
+        end_date: "2024-12-31T23:59:59Z",
+        applicable_products: ["1", "2"],
+        min_purchase_amount: 0,
+        code: "PIZZA20"
+      },
+      {
+        id: "2",
+        name: "Free Delivery",
+        description: "Free delivery on orders over $30",
+        discount_type: "fixed",
+        discount_value: 0,
+        start_date: "2024-01-01T00:00:00Z",
+        end_date: "2024-12-31T23:59:59Z",
+        applicable_products: [],
+        min_purchase_amount: 30,
+        code: "FREEDELIVERY"
+      }
+    ];
+
+    // Mock cart
+    let mockCart = {
+      cart_id: "cart-123",
+      items: [],
+      subtotal: 0,
+      tax: 0,
+      total: 0
+    };
+
+    // Create mock API client
+    const mockAPI = {
+      async getStore() {
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        return mockStore;
+      },
+
+      async getProducts(filters = {}) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        let filtered = [...mockProducts];
+        
+        if (filters.category) {
+          filtered = filtered.filter(p => p.category === filters.category);
+        }
+        
+        if (filters.search) {
+          const searchLower = filters.search.toLowerCase();
+          filtered = filtered.filter(p => 
+            p.name.toLowerCase().includes(searchLower) ||
+            p.description.toLowerCase().includes(searchLower)
+          );
+        }
+        
+        if (filters.min_price) {
+          filtered = filtered.filter(p => p.price >= filters.min_price);
+        }
+        
+        if (filters.max_price) {
+          filtered = filtered.filter(p => p.price <= filters.max_price);
+        }
+        
+        if (filters.in_stock !== undefined) {
+          filtered = filtered.filter(p => p.is_available === filters.in_stock);
+        }
+        
+        return filtered;
+      },
+
+      async getCategories() {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        return mockCategories;
+      },
+
+      async getPromotions() {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        return mockPromotions;
+      },
+
+      async addToCart(productId, quantity = 1, variants = {}) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        const product = mockProducts.find(p => p.id === productId);
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        
+        if (!product.is_available || product.stock_quantity === 0) {
+          throw new Error('Product is out of stock');
+        }
+        
+        // Find existing item in cart
+        const existingItem = mockCart.items.find(item => item.product_id === productId);
+        
+        if (existingItem) {
+          existingItem.quantity += quantity;
+          existingItem.total_price = existingItem.unit_price * existingItem.quantity;
+        } else {
+          mockCart.items.push({
+            product_id: productId,
+            product_name: product.name,
+            quantity: quantity,
+            unit_price: product.price,
+            total_price: product.price * quantity,
+            variants: variants
+          });
+        }
+        
+        // Recalculate totals
+        mockCart.subtotal = mockCart.items.reduce((sum, item) => sum + item.total_price, 0);
+        mockCart.tax = mockCart.subtotal * (mockStore.configuration.tax_rate || 0);
+        mockCart.total = mockCart.subtotal + mockCart.tax;
+        
+        return { ...mockCart };
+      },
+
+      async checkout(orderData) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        if (mockCart.items.length === 0) {
+          throw new Error('Cart is empty');
+        }
+        
+        // Generate order number
+        const orderNumber = `ORD-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
+        
+        return {
+          order_id: `order-${Date.now()}`,
+          order_number: orderNumber,
+          status: "pending",
+          total: mockCart.total,
+          items: mockCart.items,
+          customer_name: orderData.customer_name,
+          estimated_delivery_time: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
+          tracking_url: `/track/${orderNumber}`
+        };
+      },
+
+      async getOrderStatus(orderNumber) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        return {
+          order_id: "order-123",
+          order_number: orderNumber,
+          status: "preparing",
+          total: mockCart.total,
+          items: mockCart.items,
+          customer_name: "Test Customer",
+          estimated_delivery_time: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+      }
+    };
+
+    // Inject mock API client
+    window.__STORE_API__ = mockAPI;
+  </script>
+  
+  <script src="../theme-template/scripts/api-client.js"></script>
+  <script src="../theme-template/scripts/main.js"></script>
+  
+  <script>
+    // Initialize theme with mock API
+    if (typeof initTheme === 'function') {
+      initTheme({
+        api: window.__STORE_API__,
+        container: document.getElementById('theme-container'),
+        storeSlug: 'test-restaurant'
+      });
+    } else {
+      console.error('initTheme function not found. Make sure main.js is loaded correctly.');
+    }
+  </script>
+</body>
+</html>
+

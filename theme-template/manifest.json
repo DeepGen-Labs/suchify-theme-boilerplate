@@ -1,0 +1,34 @@
+{
+  "name": "Suchify Starter Theme",
+  "version": "1.0.0",
+  "description": "A modern, responsive starter theme for Suchify stores. Perfect for restaurants, retail, and service businesses.",
+  "category": "general",
+  "apiVersion": "1.0",
+  "requiredApis": [
+    "get_public_store_settings",
+    "get_public_products",
+    "get_categories",
+    "add_to_cart",
+    "create_order",
+    "get_promotions"
+  ],
+  "features": [
+    "product_display",
+    "category_navigation",
+    "shopping_cart",
+    "checkout",
+    "promotions",
+    "social_links",
+    "responsive_design"
+  ],
+  "configurable": {
+    "colors": true,
+    "layout": true,
+    "fonts": true
+  },
+  "restrictions": {
+    "allowedDomains": [],
+    "requiresAuth": false
+  }
+}
+
